@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import argparse
+import sys
+
 
 def split_bill(bill: float, tip_percent: float, people: int) -> float:
     """Return each person's share of ``bill`` after adding ``tip_percent`` tip.
@@ -26,3 +29,27 @@ def split_bill(bill: float, tip_percent: float, people: int) -> float:
 
     total = bill * (1 + tip_percent / 100)
     return round(total / people, 2)
+
+
+def main(argv: list[str] | None = None) -> int:
+    """CLI entry point: ``python tip_calculator.py BILL TIP_PERCENT PEOPLE``."""
+    parser = argparse.ArgumentParser(
+        description="Split a restaurant bill between people, including tip.",
+    )
+    parser.add_argument("bill", type=float, help="Pre-tip bill amount")
+    parser.add_argument("tip_percent", type=float, help="Tip percentage")
+    parser.add_argument("people", type=int, help="Number of people splitting")
+    args = parser.parse_args(argv)
+
+    try:
+        share = split_bill(args.bill, args.tip_percent, args.people)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"{share:.2f}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,8 +1,8 @@
-"""Tests for tip_calculator.split_bill."""
+"""Tests for tip_calculator.split_bill and CLI."""
 
 import pytest
 
-from tip_calculator import split_bill
+from tip_calculator import main, split_bill
 
 
 def test_even_split_with_tip():
@@ -39,3 +39,11 @@ def test_zero_bill():
 def test_invalid_inputs_raise(bill, tip_percent, people, match):
     with pytest.raises(ValueError, match=match):
         split_bill(bill, tip_percent, people)
+
+
+def test_cli_prints_per_person_share(capsys):
+    # $120 + 18% tip = $141.60 / 3 people = $47.20
+    exit_code = main(["120", "18", "3"])
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert captured.out.strip() == "47.20"

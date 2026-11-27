@@ -10,6 +10,17 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Command line
+
+```bash
+python tip_calculator.py 120 18 3
+# 47.20
+```
+
+Arguments are `BILL TIP_PERCENT PEOPLE`.
+
+### Library
+
 ```python
 from tip_calculator import split_bill
 
