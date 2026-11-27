@@ -1,0 +1,4 @@
+{
+  "name": "1",
+  "install": "[ ! -d '/agent/repos/1' ] || cd '/agent/repos/1' || exit $?\ntest -f README.md"
+}
